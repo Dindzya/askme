@@ -3,6 +3,7 @@ class QuestionsController < ApplicationController
   def create
     @question = Question.create(question_params)
     redirect_to question_path(@question), notice: 'New question create!'
+    
   end
   def update
     @question.update(question_params) 
@@ -19,7 +20,11 @@ class QuestionsController < ApplicationController
     @question = Question.new
   end
   def new 
+    if session[:user_id].present?
     @question = Question.new
+    else 
+      redirect_to root_path, notice: 'You are not authorized!'
+    end
   end 
   def edit
   end 
